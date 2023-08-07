@@ -5,7 +5,7 @@ export default async function handler(req, res) {
     const prisma = new PrismaClient();
 
     // Obtener Ordenes 
-    const ordenes = await prisma.orden.findMany({
+    const ordenes = await prisma.Orden.findMany({
         where: {
             estado: false,
         }
@@ -13,7 +13,7 @@ export default async function handler(req, res) {
     res.status(200).json(ordenes);
     if (req.method === 'POST') {
         // Crear Ordenes
-        const orden = await prisma.orden.create({
+        const orden = await prisma.Orden.create({
             data: {
                 nombre: req.body.nombre,
                 total: req.body.total,
