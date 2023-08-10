@@ -6,14 +6,10 @@ import Orden from "@/components/Orden";
 export default function Admin() {
 
     const fetcher = () => axios('/api/ordenes').then(datos => datos.data)
-    const { data, error, isLoading } = useSWR('/api/ordenes', fetcher, {refreshInterval: 100})
+    const { data, error, isLoading } = useSWR('/api/ordenes', fetcher, { refreshInterval: 100 })
 
-    /*  console.log(data)
-     console.log(error)
-     console.log(isLoading)
-      */
     return (
-        <AdminLayout pagina={'Admin'}>
+        <AdminLayout pagina={'Admin'} isLoading={isLoading}>
             <h1 className=" text-4xl font-black">Panel de Administración</h1>
             <p className=" text-2xl my-10">Administra las ordenes</p>
 
@@ -21,6 +17,7 @@ export default function Admin() {
                 <Orden
                     key={orden.id}
                     orden={orden}
+                    mostrarBoton={true} 
                 />
             ) : <p>No hay ordenes pendientes</p>}
         </AdminLayout>

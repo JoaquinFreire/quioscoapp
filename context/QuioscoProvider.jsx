@@ -7,6 +7,19 @@ const QuioscoContext = createContext();
 
 const QuioscoProvider = ({ children }) => {
 
+    const [estaAutenticado, setEstaAutenticado] = useState(false);
+    const carritoLS = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('carrito')) ?? [] : [];
+    const [carrito, setCarrito] = useState(carritoLS);
+    const [paginaLista, setPaginaLista] = useState(false);
+
+    useEffect(() => {
+      setPaginaLista(true);
+    }, [])
+    useEffect(() => {
+        localStorage.setItem('carrito', JSON.stringify(carrito));
+        console.log(carrito)
+    }, [carrito])
+    
     const [categorias, setCategorias] = useState([]);
     const [categoriaActual, setCategoriaActual] = useState({});
     const [producto, setProducto] = useState({});
@@ -101,7 +114,9 @@ const QuioscoProvider = ({ children }) => {
         console.log('enviando Orden...')
     }
 
-    return (
+    
+
+    return paginaLista ? (
         <QuioscoContext.Provider
             value={{
                 categorias,
@@ -118,12 +133,16 @@ const QuioscoProvider = ({ children }) => {
                 nombre,
                 setNombre,
                 colocarOrden,
-                total
+                total,
+                estaAutenticado,
+                setEstaAutenticado,
+                setCarrito,
+                carrito
             }}
         >
             {children}
         </QuioscoContext.Provider>
-    )
+    ) : null
 }
 
 export {

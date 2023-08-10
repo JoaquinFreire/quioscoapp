@@ -34,3 +34,8 @@ model Orden {
   pedido Json
   estado Boolean @default(false)
 }
+model Usuario {
+  id Int @id @default(autoincrement())
+  email String 
+  password String
+}

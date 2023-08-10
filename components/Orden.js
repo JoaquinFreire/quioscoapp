@@ -3,7 +3,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import Image from "next/image";
 
-export default function Orden({ orden }) {
+export default function Orden({ orden, mostrarBoton }) {
     const { id, nombre, total, pedido } = orden;
 
     const completarOrden = async () => {
@@ -37,17 +37,19 @@ export default function Orden({ orden }) {
                     </div>
                 ))}
             </div>
-            <div className=" md:flex md:items-center md:justify-between my-10">
+            <div className=" md:flex md:items-center md:justify-between my-10 ">
                 <p className=" mt-5 font-black text-4xl text-amber-500">
-                    Total a pagar: {formatearDinero(total)}
+                    {mostrarBoton ? 'Total a pagar: ' : 'Pagado: '}{formatearDinero(total)}
                 </p>
-                <button
-                    className=" bg-indigo-600 hover:bg-indigo-800 text-white mt-5 md:mt-0 py-3 px-10 uppercase font-bold rounded-lg"
-                    type="button"
-                    onClick={completarOrden}
-                >
-                    Completar Orden
-                </button>
+                {mostrarBoton && (
+                    <button
+                        className=" bg-indigo-600 hover:bg-indigo-800 text-white mt-5 md:mt-0 py-3 px-10 uppercase font-bold rounded-lg"
+                        type="button"
+                        onClick={completarOrden}
+                    >
+                        Completar Orden
+                    </button>
+                )}
             </div>
         </div>
     )
